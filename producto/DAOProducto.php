@@ -39,19 +39,15 @@
 				$sql = "SELECT * FROM producto;";
 				$statement = $cnn->prepare( $sql );
 				$statement->execute();
-
-				if( $statement->fetch( PDO::FETCH_ASSOC) == NULL ){
-					throw new Exception("No hay registros en la tabla producto");
-				}else{
-
-					while( $resultado = $statement->fetch( PDO::FETCH_ASSOC)){
-						/*echo "Producto: ".$resultado['producto']." <br>".
-							"Sotck: ".$resultado['stock']."<br>".
-							"Precio: ".$resultado['precio']."<br>";*/
-						$data["data"][] = $resultado;
-					}
-					echo json_encode($data);
+				
+				while( $resultado = $statement->fetch( PDO::FETCH_ASSOC)){
+					/*echo "Producto: ".$resultado['producto']." <br>".
+						"Sotck: ".$resultado['stock']."<br>".
+						"Precio: ".$resultado['precio']."<br>";*/
+					$data["data"][] = $resultado;
 				}
+				echo json_encode($data);
+				
 			}catch(Exception $e){
 				echo $e->getMessage();
 			}finally{
